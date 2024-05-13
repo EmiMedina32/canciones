@@ -1,4 +1,5 @@
 BEGIN TRANSACTION;
+DROP TABLE IF EXISTS "albums";
 CREATE TABLE IF NOT EXISTS "albums" (
 	"AlbumId"	INTEGER NOT NULL,
 	"Title"	NVARCHAR(160) NOT NULL,
@@ -6,16 +7,19 @@ CREATE TABLE IF NOT EXISTS "albums" (
 	FOREIGN KEY("ArtistId") REFERENCES "artists"("ArtistId") ON DELETE NO ACTION ON UPDATE NO ACTION,
 	PRIMARY KEY("AlbumId" AUTOINCREMENT)
 );
+DROP TABLE IF EXISTS "artists";
 CREATE TABLE IF NOT EXISTS "artists" (
 	"ArtistId"	INTEGER NOT NULL,
 	"Name"	NVARCHAR(120),
 	PRIMARY KEY("ArtistId" AUTOINCREMENT)
 );
+DROP TABLE IF EXISTS "genres";
 CREATE TABLE IF NOT EXISTS "genres" (
 	"GenreId"	INTEGER NOT NULL,
 	"Name"	NVARCHAR(120),
 	PRIMARY KEY("GenreId" AUTOINCREMENT)
 );
+DROP TABLE IF EXISTS "tracks";
 CREATE TABLE IF NOT EXISTS "tracks" (
 	"TrackId"	INTEGER NOT NULL,
 	"Name"	NVARCHAR(200) NOT NULL,
@@ -4181,15 +4185,19 @@ INSERT INTO "tracks" ("TrackId","Name","AlbumId","MediaTypeId","GenreId","Compos
  (3501,'L''orfeo, Act 3, Sinfonia (Orchestra)',345,2,24,'Claudio Monteverdi',66639,1189062,0.99),
  (3502,'Quintet for Horn, Violin, 2 Violas, and Cello in E Flat Major, K. 407/386c: III. Allegro',346,2,24,'Wolfgang Amadeus Mozart',221331,3665114,0.99),
  (3503,'Koyaanisqatsi',347,2,10,'Philip Glass',206005,3305164,0.99);
+DROP INDEX IF EXISTS "IFK_AlbumArtistId";
 CREATE INDEX IF NOT EXISTS "IFK_AlbumArtistId" ON "albums" (
 	"ArtistId"
 );
+DROP INDEX IF EXISTS "IFK_TrackAlbumId";
 CREATE INDEX IF NOT EXISTS "IFK_TrackAlbumId" ON "tracks" (
 	"AlbumId"
 );
+DROP INDEX IF EXISTS "IFK_TrackGenreId";
 CREATE INDEX IF NOT EXISTS "IFK_TrackGenreId" ON "tracks" (
 	"GenreId"
 );
+DROP INDEX IF EXISTS "IFK_TrackMediaTypeId";
 CREATE INDEX IF NOT EXISTS "IFK_TrackMediaTypeId" ON "tracks" (
 	"MediaTypeId"
 );

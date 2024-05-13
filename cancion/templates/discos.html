@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>lista de cantantes</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='style.css')}}"
+    />
+  </head>
+  <body>
+    <h1>Discos</h1>
+    <ul>
+      {%for d in discos %}
+      <li>{{ d['title']}}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

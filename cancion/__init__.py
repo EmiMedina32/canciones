@@ -1,20 +1,50 @@
-from flask import Flask,render_template
+import os 
+from flask import Flask, send_file, render_template
 
 app = Flask(__name__)
 
 
 with app.app_context():
-    from.import db
+    from . import db
     db.init_app(app)
 
 @app.route('/')
 def hello():
-    return 'Hello, World!'
+    return 'Que, tal!'
 
-@app.route('/albums')
-def album():
+
+@app.route('/discos')
+def discos():
+   
     base_de_datos = db.get_db()
-    consulta = """ SELECT title FROM albums ORDER BY title ASC"""
+    consulta = """
+        SELECT a.title AS Album, ar.name AS Artista, COUNT(t.name) AS cantCanciones FROM albums a
+        JOIN artists ar ON a.ArtistId = ar.ArtistId
+        JOIN tracks t ON a.AlbumId = t.AlbumId
+        GROUP BY a.AlbumId
+        ORDER BY Album;
+    """
+
     resultado = base_de_datos.execute(consulta)
     lista_de_resultados = resultado.fetchall()
-    return render_template("albums.html", album=lista_de_resultados)
+    return render_template("discos.html", discos=lista_de_resultados)
+
+
+@app.route('/canciones')
+def canciones():
+    base_de_datos = db.get_db()
+    consulta = """
+        SELECT name FROM tracks
+        ORDER BY name;
+    """
+
+    resultado = base_de_datos.execute(consulta)
+    lista_de_resultados = resultado.fetchall()
+    return render_template("cancion.html", canciones=lista_de_resultados)
+
+
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_file('static/flavicon.ico')
