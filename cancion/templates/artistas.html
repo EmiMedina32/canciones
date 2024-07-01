@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>lista de cantantes</title>
+    <title>lista de Artistas</title>
     <link
       rel="stylesheet"
       type="text/css"
@@ -9,10 +9,10 @@
     />
   </head>
   <body>
-    <h1>Discos</h1>
+    <h1>Artista</h1>
     <ul>
-      {%for d in discos %}
-      <li>{{ d['Album']}}</li>
+      {%for a in artista %}
+      <li>{{ a['Artista']}}</li>
       {% endfor %}
     </ul>
   </body>

@@ -43,6 +43,18 @@ def canciones():
     return render_template("cancion.html", canciones=lista_de_resultados)
 
 
+@app.route('/Artista')
+def artista():
+   
+    base_de_datos = db.get_db()
+    consulta = """
+        SELECT  ar.name AS Artista FROM artists ar
+        ORDER BY Artista;
+    """
+
+    resultado = base_de_datos.execute(consulta)
+    lista_de_resultados = resultado.fetchall()
+    return render_template("artistas.html", artista=lista_de_resultados)
 
 
 @app.route('/favicon.ico')
